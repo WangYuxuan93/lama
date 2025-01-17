@@ -11,6 +11,18 @@ import os
 import sys
 import traceback
 
+current_dir = os.path.dirname(os.path.abspath(__file__))
+
+# 拼接 lama 路径
+lama_path = os.path.abspath(os.path.join(current_dir, '..'))
+
+# 将 lama_path 添加到 Python 模块搜索路径
+if lama_path not in sys.path:
+    sys.path.append(lama_path)
+
+# 验证路径是否添加成功
+print("PYTHONPATH includes:", sys.path)
+
 from saicinpainting.evaluation.utils import move_to_device
 from saicinpainting.evaluation.refinement import refine_predict
 os.environ['OMP_NUM_THREADS'] = '1'
@@ -18,6 +30,8 @@ os.environ['OPENBLAS_NUM_THREADS'] = '1'
 os.environ['MKL_NUM_THREADS'] = '1'
 os.environ['VECLIB_MAXIMUM_THREADS'] = '1'
 os.environ['NUMEXPR_NUM_THREADS'] = '1'
+
+
 
 import cv2
 import hydra
